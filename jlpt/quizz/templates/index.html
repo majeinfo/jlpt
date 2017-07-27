@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Home Page" %}{% endblock %}
+{% block parms %}
+Nombre de mots en base: {{ wc }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+
+{% if words %}
+<form action="{% url 'check_quizz' %}" method="get">
+    <table class="table table-striped">
+        <thead>
+        <tr><th></th></tr>
+        </thead>
+        <tbody>
+        {% for word in words %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}
+                    <input type="hidden" name="id" value="{{ word.id }}">
+                    <input type="hidden" name="romaji" value="{{ word.word_romaji }}">
+                    <input type="hidden" name="kana" value="{{ word.word_kana }}">
+                    <input type="hidden" name="kanji" value="{{ word.word_kanji }}">
+                </th>
+                <td>{{ word.word_kana }}</td>
+                <!-- <td>{{ word.word_romaji }}</td> -->
+                <td>{{ word.word_kanji }}</td>
+                <td><input type="text" name="{{ word.word_romaji }}"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p align="center"><input type="submit" class="btn btn-primary btn-lg" role="button" value="Voir les résultats"></p>
+</form>
+{% endif %}
+
+    </div>
+</div> <!-- /container -->
+{% endblock %}

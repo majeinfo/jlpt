@@ -1,0 +1,58 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <!-- <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" /> -->
+    <title>{% block title %}{% endblock %}</title>
+    <script>
+        function confirmBox() {
+            //return bootbox.dialog("{% trans "Do you confirm ?" %}");
+            return confirm("{% trans "Do you confirm ?" %}");
+        }
+    </script>
+    <script src="{% static 'jquery/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+</head>
+<body>
+
+<div class="jumbotron" style="padding-top:0; padding-bottom:0;">
+    <div class="container">
+        <h1>Préparation au JLPT5</h1>
+        <p>Ce site vous permet de vous entrainer à l'examen JLPT5 en vous proposant des quizz sur le vocabulaire que
+            vous devriez maitriser pour augmenter vos chances de réussite !</p>
+        <p>
+            <table>
+                <tr><td width="80%"><a class="btn btn-primary btn-lg" href="{% url 'run_quizz' %}" role="button">Lancez un Quizz !</a></td>
+                <td>{% block parms %}{% endblock %}</td></tr>
+            </table>
+        </p>
+        {% bootstrap_messages %}
+    </div>
+</div>
+
+
+<div id="wrapper">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% block more_js %}{% endblock %}
+</body>
+</html>

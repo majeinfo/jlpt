@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block title %}{% trans "Result Page" %}{% endblock %}
+{% block parms %}
+Nombre de mots en base: {{ wc }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+
+    <table class="table table-striped">
+        <thead>
+        <tr><th></th></tr>
+        </thead>
+        <tbody>
+        {% for res in results %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ res.word_kana }}</td>
+                <td>{{ res.word_kanji }}</td>
+                <td>{{ res.word_romaji }}</td>
+                <td><input readonly type="text" name="{{ word.word_romaji }}" value="{{ res.user_word }}"></td>
+                <td align="left">
+                    {% if res.status %}
+                        <img src="{% static 'images/maru.png' %}">
+                    {% else %}
+                        <img src="{% static 'images/batsu.png' %}">
+                    {% endif %}
+                </td>
+                <td>{{ res.word_trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+</div> <!-- /container -->
+{% endblock %}
