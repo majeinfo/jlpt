@@ -13,7 +13,7 @@ Nombre de mots en base: {{ wc }}
 <form action="{% url 'check_quizz' %}" method="get">
     <table class="table table-striped">
         <thead>
-        <tr><th></th></tr>
+        <tr><td></td><th>Kana</th><th>Kanji</th><th>Votre traduction</th></tr>
         </thead>
         <tbody>
         {% for word in words %}
