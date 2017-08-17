@@ -65,7 +65,8 @@ def _word_count():
 
 def _normalize(s):
     # Remove unwanted characters
-    s = s.replace(",;:!' -_+*\"\\/~[]{}()=<>", "")
+    for c in ",;:!' -_+*\"\\/~[]{}()=<>":
+        s = s.replace(c, "")
 
     # change accents
     accents = {
