@@ -6,5 +6,5 @@ from django.contrib import admin
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('quizz/', include('quizz.urls')),
-    #path('.*', include('quizz.urls', namespace='quizz')),
+    path('', include('quizz.urls')) #, namespace='quizz')),
 ]
