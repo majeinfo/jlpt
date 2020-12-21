@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load staticfiles %}
+{% load static %}
 {% block title %}{% trans "Result Page" %}{% endblock %}
 {% block parms %}
-Nombre de mots en base: {{ wc }}
+    Nombre de mots en base: {{ wc }}
+    Nombre de verbes en base: {{  verbs_wc }}
 {% endblock %}
 
 {% block content %}

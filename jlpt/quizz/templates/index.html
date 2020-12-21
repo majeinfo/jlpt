@@ -2,7 +2,8 @@
 {% load i18n %}
 {% block title %}{% trans "Home Page" %}{% endblock %}
 {% block parms %}
-Nombre de mots en base: {{ wc }}
+    Nombre de mots en base: {{ wc }}<br/>
+    Nombre de verbes en base: {{  verbs_wc }}
 {% endblock %}
 
 {% block content %}
@@ -34,6 +35,36 @@ Nombre de mots en base: {{ wc }}
     </table>
     <p align="center"><input type="submit" class="btn btn-primary btn-lg" role="button" value="Voir les résultats"></p>
 </form>
+{% endif %}
+
+{% if verbs %}
+    <form action="{% url 'check_verbs' %}" method="get">
+        <table class="table table-striped">
+            <thead>
+            <tr><td></td><th>Kana</th><th>Kanji</th><th>Forme demandée</th><th>Votre réponse</th></tr>
+            </thead>
+            <tbody>
+            {% for verb in verbs %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}
+                        <input type="hidden" name="id" value="{{ verb.id }}">
+                        <input type="hidden" name="kana" value="{{ verb.kana }}">
+                        <input type="hidden" name="kanji" value="{{ verb.kanji }}">
+                        <input type="hidden" name="neutre_present" value="{{ verb.neutre_present }}">
+                        <input type="hidden" name="forme" value="{{ verb.forme }}">
+                        <input type="hidden" name="field" value="{{ verb.field }}">
+                    </th>
+                    <td>{{ verb.kana }}</td>
+                    <td>{{ verb.kanji }}</td>
+                    <td>{{ verb.neutre_present }}</td>
+                    <td>{{ verb.forme }}</td>
+                    <td><input type="text" name="{{ verb.neutre_present }}{{"+"}}{{ verb.field }}"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p align="center"><input type="submit" class="btn btn-primary btn-lg" role="button" value="Voir les résultats"></p>
+    </form>
 {% endif %}
 
     </div>

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "Result Page" %}{% endblock %}
+{% block parms %}
+    Nombre de mots en base: {{ wc }}
+    Nombre de verbes en base: {{  verbs_wc }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+
+            <table class="table table-striped">
+                <thead>
+                <tr><th></th></tr>
+                </thead>
+                <tbody>
+                {% for res in results %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ res.kana }}</td>
+                        <td>{{ res.kanji }}</td>
+                        <td>{{ res.neutre_present }}</td>
+                        <td>{{ res.forme }}</td>
+                        <td><input readonly type="text" value="{{ res.answer }}"></td>
+                        <td align="left">
+                            {% if res.status %}
+                                <img src="{% static 'images/maru.png' %}">
+                            {% else %}
+                                <img src="{% static 'images/batsu.png' %}">
+                            {% endif %}
+                        </td>
+                        <td>{{ res.good_answer }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div> <!-- /container -->
+{% endblock %}

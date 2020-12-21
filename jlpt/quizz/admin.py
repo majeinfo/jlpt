@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Word, Translation
+from .models import Word, Translation, Verb
 
 class ChoiceInline(admin.TabularInline):
     model = Translation
@@ -13,4 +13,10 @@ class WordAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
 
 
+class VerbAdmin(admin.ModelAdmin):
+    list_display = ('kana', 'kanji', 'neutre_present', 'poli_present')
+    search_fields = ('neutre_present', 'poli_present')
+
+
 admin.site.register(Word, WordAdmin)
+admin.site.register(Verb, VerbAdmin)

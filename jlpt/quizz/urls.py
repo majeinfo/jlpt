@@ -1,9 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    url(r'^run_quizz$', views.run_quizz, name='run_quizz'),
-    url(r'^check_quizz$', views.check_quizz, name='check_quizz'),
-    url(r'^$', views.index, name='index'),
+    path('run_quizz', views.run_quizz, name='run_quizz'),
+    path('check_quizz', views.check_quizz, name='check_quizz'),
+    path('run_verbs', views.run_verbs, name='run_verbs'),
+    path('check_verbs', views.check_verbs, name='check_verbs'),
+    path('', views.index, name='index'),
 ]

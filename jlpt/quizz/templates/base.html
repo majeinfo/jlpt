@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 {% load bootstrap3 %}
 {% load i18n %}
 
@@ -30,8 +30,13 @@
             vous devriez maitriser pour augmenter vos chances de réussite !</p>
         <p>
             <table>
-                <tr><td width="80%"><a class="btn btn-primary btn-lg" href="{% url 'run_quizz' %}" role="button">Lancez un Quizz !</a></td>
-                    <td><b>{% block parms %}{% endblock %}</b></td></tr>
+                <tr>
+                    <td width="80%">
+                        <a class="btn btn-primary btn-lg" href="{% url 'run_quizz' %}" role="button">Quizz sur les mots</a>
+                        <a class="btn btn-primary btn-lg" href="{% url 'run_verbs' %}" role="button">Quizz sur les verbes</a>
+                    </td>
+                    <td><b>{% block parms %}{% endblock %}</b></td>
+                </tr>
             </table>
         </p>
         {% bootstrap_messages %}
