@@ -13,15 +13,15 @@
 
             <table class="table table-striped">
                 <thead>
-                <tr><th></th></tr>
+                <tr><td></td><th>Kanji</th><th>Romaji</th><th>Traduction</th><th>Forme demandée</th><th>Votre réponse</th></tr>
                 </thead>
                 <tbody>
                 {% for res in results %}
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ res.kana }}</td>
                         <td>{{ res.kanji }}</td>
-                        <td>{{ res.neutre_present }}</td>
+                        <td>{{ res.romaji }}</td>
+                        <td>{{ res.traduction }}</td>
                         <td>{{ res.forme }}</td>
                         <td><input readonly type="text" value="{{ res.answer }}"></td>
                         <td align="left">

@@ -8,32 +8,42 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import render, redirect
 
 verb_forms = [
-    {'title': 'neutre passé', 'field': 'neutre_passe'},
-    {'title': 'neutre présent négatif', 'field': 'neutre_present_neg'},
-    {'title': 'neutre passé négatif', 'field': 'neutre_passe_neg'},
-    {'title': 'forme polie au présent', 'field': 'poli_present'},
-    {'title': 'forme polie au passé', 'field': 'poli_passe'},
-    {'title': 'forme polie au présent négatif', 'field': 'poli_present_neg'},
-    {'title': 'forme polie au passé négatif', 'field': 'poli_passe_neg'},
-    {'title': 'forme en -te', 'field': 'forme_te'},
-    {'title': 'forme passive', 'field': 'forme_passive'},
-    {'title': 'forme conditionnelle en -tara', 'field': 'cond_tara'},
-    {'title': 'forme conditionnelle négative en -tara', 'field': 'cond_tara_neg'},
-    {'title': 'forme conditionnelle en -eba', 'field': 'cond_eba'},
-    {'title': 'forme conditionnelle négative en -eba', 'field': 'cond_eba_neg'},
-    {'title': 'forme factitive (faire faire)', 'field': 'factitif'},
-    {'title': 'forme potentielle (pouvoir faire)', 'field': 'potentiel'},
-    {'title': 'forme potentielle négative (ne pas pouvoir faire)', 'field': 'potentiel_neg'},
-    {'title': 'forme volitive (vouloir faire)', 'field': 'volitive'},
-    {'title': 'forme suspensive polie (-tari)', 'field': 'suspensive'},
-    {'title': 'forme conjecturale polie (faisons...)', 'field': 'poli_conjectural'},
+    {'title': 'forme neutre passé', 'field': 'passe_pos'},
+    {'title': 'forme neutre présent négatif', 'field': 'present_neg'},
+    {'title': 'forme neutre passé négatif', 'field': 'passe_neg'},
+    {'title': 'forme polie au présent', 'field': 'present_pos_poli'},
+    {'title': 'forme polie au passé', 'field': 'passe_pos_poli'},
+    {'title': 'forme polie au présent négatif', 'field': 'present_neg_poli'},
+    {'title': 'forme polie au passé négatif', 'field': 'passe_neg_poli'},
+    {'title': 'forme en -te', 'field': 'forme_te_pos'},
+    {'title': 'forme en -te négative', 'field': 'forme_te_neg'},
+    {'title': 'forme conditionnelle en -tara', 'field': 'conditionnel_tara_pos'},
+    {'title': 'forme conditionnelle négative en -tara', 'field': 'conditionnel_tara_neg'},
+    {'title': 'forme conditionnelle en -eba', 'field': 'conditionnel_eba_pos'},
+    {'title': 'forme conditionnelle négative en -eba', 'field': 'conditionnel_eba_neg'},
     {'title': 'gérondif (en faisant...)', 'field': 'gerondif'},
-    {'title': 'impératif neutre', 'field': 'imperatif'},
+    {'title': 'impératif neutre', 'field': 'imperatif_pos'},
     {'title': 'impératif neutre négatif', 'field': 'imperatif_neg'},
-    {'title': 'impératif autoritaire', 'field': 'imperatif_sup'},
-    {'title': 'impératif autoritaire négatif', 'field': 'imperatif_neg_sup'},
-    {'title': 'impératif poli', 'field': 'imperatif_poli'},
-    {'title': 'impératif poli négatif', 'field': 'imperatif_poli_neg'},
+    {'title': 'impératif poli', 'field': 'imperatif_pos_poli'},
+    {'title': 'impératif poli négatif', 'field': 'imperatif_neg_poli'},
+    {'title': 'forme potentielle neutre (pouvoir faire)', 'field': 'potentiel_pos'},
+    {'title': 'forme potentielle négative neutre (ne pas pouvoir faire)', 'field': 'potentiel_neg'},
+    {'title': 'forme potentielle polie (pouvoir faire)', 'field': 'potentiel_pos_poli'},
+    {'title': 'forme potentielle négative polie (ne pas pouvoir faire)', 'field': 'potentiel_neg_poli'},
+    {'title': 'forme passive neutre', 'field': 'passif_pos'},
+    {'title': 'forme passive négative neutre', 'field': 'passif_neg'},
+    {'title': 'forme passive polie', 'field': 'passif_pos_poli'},
+    {'title': 'forme passive négative polie', 'field': 'passif_neg_poli'},
+    {'title': 'forme volitive (vouloir faire)', 'field': 'volitive'},
+    {'title': 'forme volitive polie (vouloir faire)', 'field': 'volitive_polie'},
+    {'title': 'forme factitive (faire faire)', 'field': 'causatif_pos'},
+    {'title': 'forme factitive négative (faire faire)', 'field': 'causatif_neg'},
+    {'title': 'forme factitive polie (faire faire)', 'field': 'causatif_pos_poli'},
+    {'title': 'forme factitive négative polie (faire faire)', 'field': 'causatif_neg_poli'},
+    {'title': 'forme désidérative présent (je veux...)', 'field': 'desideratif_present'},
+    {'title': 'forme désidérative présent négatif (je ne veux pas...)', 'field': 'desideratif_present_neg'},
+    {'title': 'forme désidérative passé (je voulais...)', 'field': 'desideratif_passe'},
+    {'title': 'forme désidérative passé négatif (je ne voulais pas...)', 'field': 'desideratif_passe_neg'},
 ]
 
 cur_lang = 'fr'
@@ -92,21 +102,31 @@ def check_quizz(request):
 def run_verbs(request):
     # Select "n" random verbs
     count = 20      # TODO: could be chosen by the user
-    verbs = Verb.objects.order_by('?')[:count]
+    verbs = Verb.objects.order_by('?')[:count * 10]
 
     verbs2 = []
     for verb in verbs:
-        f = random.randrange(len(verb_forms))
+        # Test que la traduction existe
+        if not verb.traduction: continue
+
+        # Teste que le champ n'est pas vide
+        count -= 1
+        while True:
+            f = random.randrange(len(verb_forms))
+            v = getattr(verb, verb_forms[f]['field'])
+            if v: break
+
         verbs2.append(
             {
                 'forme': verb_forms[f]['title'],
                 'field': verb_forms[f]['field'],
-                'kana': verb.kana,
+                'traduction': verb.traduction,
                 'kanji': verb.kanji,
-                'neutre_present': verb.neutre_present,
+                'romaji': verb.romaji,
                 'id': verb.id
             }
         )
+        if not count: break
 
     context = { 'verbs': verbs2, 'wc': _word_count(), 'verbs_wc': _verb_count() }
     return render(request, 'index.html', context)
@@ -115,9 +135,9 @@ def run_verbs(request):
 def check_verbs(request):
     results = []
     verbs_id = request.GET.getlist('id')
-    verbs_kana = request.GET.getlist('kana')
+    verbs_romaji = request.GET.getlist('romaji')
     verbs_kanji = request.GET.getlist('kanji')
-    verbs_neutre_present = request.GET.getlist('neutre_present')
+    verbs_traduction = request.GET.getlist('traduction')
     verbs_formes = request.GET.getlist('forme')
     verbs_fields = request.GET.getlist('field')
     count = len(verbs_id)
@@ -126,11 +146,11 @@ def check_verbs(request):
     for idx, wid in enumerate(verbs_id):
         item = {
             'status': False,
-            'kana': verbs_kana[idx],
+            'romaji': verbs_romaji[idx],
             'kanji': verbs_kanji[idx],
-            'neutre_present': verbs_neutre_present[idx],
+            'traduction': verbs_traduction[idx],
             'forme' : verbs_formes[idx],
-            'answer': _normalize(request.GET[verbs_neutre_present[idx] + "+" + verbs_fields[idx]])
+            'answer': _normalize(request.GET[verbs_romaji[idx] + "+" + verbs_fields[idx]])
         }
         qs = Verb.objects.get(pk=verbs_id[idx])
         item['good_answer'] = getattr(qs, verbs_fields[idx])

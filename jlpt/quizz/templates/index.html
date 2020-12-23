@@ -41,24 +41,24 @@
     <form action="{% url 'check_verbs' %}" method="get">
         <table class="table table-striped">
             <thead>
-            <tr><td></td><th>Kana</th><th>Kanji</th><th>Forme demandée</th><th>Votre réponse</th></tr>
+            <tr><td></td><th>Kanji</th><th>Romaji</th><th>Traduction</th><th>Forme demandée</th><th>Votre réponse</th></tr>
             </thead>
             <tbody>
             {% for verb in verbs %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}
                         <input type="hidden" name="id" value="{{ verb.id }}">
-                        <input type="hidden" name="kana" value="{{ verb.kana }}">
                         <input type="hidden" name="kanji" value="{{ verb.kanji }}">
-                        <input type="hidden" name="neutre_present" value="{{ verb.neutre_present }}">
+                        <input type="hidden" name="traduction" value="{{ verb.traduction }}">
+                        <input type="hidden" name="romaji" value="{{ verb.romaji }}">
                         <input type="hidden" name="forme" value="{{ verb.forme }}">
                         <input type="hidden" name="field" value="{{ verb.field }}">
                     </th>
-                    <td>{{ verb.kana }}</td>
                     <td>{{ verb.kanji }}</td>
-                    <td>{{ verb.neutre_present }}</td>
+                    <td>{{ verb.romaji }}</td>
+                    <td>{{ verb.traduction }}</td>
                     <td>{{ verb.forme }}</td>
-                    <td><input type="text" name="{{ verb.neutre_present }}{{"+"}}{{ verb.field }}"></td>
+                    <td><input type="text" name="{{ verb.romaji }}{{"+"}}{{ verb.field }}"></td>
                 </tr>
             {% endfor %}
             </tbody>

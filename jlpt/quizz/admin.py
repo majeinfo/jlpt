@@ -14,8 +14,8 @@ class WordAdmin(admin.ModelAdmin):
 
 
 class VerbAdmin(admin.ModelAdmin):
-    list_display = ('kana', 'kanji', 'neutre_present', 'poli_present')
-    search_fields = ('neutre_present', 'poli_present')
+    list_display = ('kanji', 'romaji', 'present_pos_poli')
+    search_fields = ('romaji', 'present_pos_poli')
 
 
 admin.site.register(Word, WordAdmin)
