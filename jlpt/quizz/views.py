@@ -35,7 +35,7 @@ verb_forms = [
     {'title': 'forme passive polie', 'field': 'passif_pos_poli'},
     {'title': 'forme passive négative polie', 'field': 'passif_neg_poli'},
     {'title': 'forme volitive (vouloir faire)', 'field': 'volitive'},
-    {'title': 'forme volitive polie (vouloir faire)', 'field': 'volitive_polie'},
+    {'title': 'forme volitive polie (vouloir faire)', 'field': 'volitive_poli'},
     {'title': 'forme factitive (faire faire)', 'field': 'causatif_pos'},
     {'title': 'forme factitive négative (faire faire)', 'field': 'causatif_neg'},
     {'title': 'forme factitive polie (faire faire)', 'field': 'causatif_pos_poli'},
