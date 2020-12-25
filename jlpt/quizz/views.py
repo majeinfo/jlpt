@@ -150,11 +150,11 @@ def check_verbs(request):
             'kanji': verbs_kanji[idx],
             'traduction': verbs_traduction[idx],
             'forme' : verbs_formes[idx],
-            'answer': _normalize(request.GET[verbs_romaji[idx] + "+" + verbs_fields[idx]])
+            'answer': request.GET[verbs_romaji[idx] + "+" + verbs_fields[idx]]
         }
         qs = Verb.objects.get(pk=verbs_id[idx])
         item['good_answer'] = getattr(qs, verbs_fields[idx])
-        if item['good_answer'] == item['answer']:
+        if _normalize(item['good_answer']) == _normalize(item['answer']):
             item['status'] = True
             goods += 1
 
